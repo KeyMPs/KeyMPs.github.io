@@ -228,12 +228,18 @@
 </style>
 </head>
 <body>
-    <h1><span class="title-highlight"><strong>KeyMPs</strong></span><br><strong>Key</strong>word Labeled Primitive Selection and<br><strong>Key</strong>point Pairs Generation Guided<br><strong>Movement Primitives</strong><br>Using Vision-Language Models</h1>
+    <!-- <h1><span class="title-highlight"><strong>KeyMPs</strong></span><br><strong>Key</strong>word Labeled Primitive Selection and<br><strong>Key</strong>point Pairs Generation Guided<br><strong>Movement Primitives</strong><br>Using Vision-Language Models</h1> -->
+    <h1><span class="title-highlight"><strong>KeyMPs</strong></span><br>One-Shot Vision-Language Guided Motion Generation by Sequencing DMPs for Occlusion-Rich Tasks</h1>
 
     <div class="author-grid">
         <div class="author">EDGAR ANAROSSI<span><a href="https://isw3.naist.jp/" target="_blank">NAIST</a></span></div>
         <div class="author">YUHWAN KWON<span><a href="https://isw3.naist.jp/" target="_blank">NAIST</a></span></div>
         <div class="author">HIROTAKA TAHARA<span><a href="https://isw3.naist.jp/" target="_blank">NAIST</a><br><a href="https://www.kobe-kosen.ac.jp/groups/denshi/?page=1&cat=PC%E9%96%A2%E9%80%A3" target="_blank">Kobe Kosen</a></span></div>
+        <div class="author">SHOHEI TANAKA<span><a href="#" target="_blank">OMRON SINIC X Corporation</a></span></div>
+        <div class="author">KEISUKE SHIRAI<span><a href="#" target="_blank">OMRON SINIC X Corporation</a></span></div>
+        <div class="author">MASASHI HAMAYA<span><a href="#" target="_blank">OMRON SINIC X Corporation</a></span></div>
+        <div class="author">CHRISTIAN BELTRAN<span><a href="#" target="_blank">OMRON SINIC X Corporation</a></span></div>
+        <div class="author">ATSUSHI HASHIMOTO<span><a href="#" target="_blank">OMRON SINIC X Corporation</a></span></div>
         <div class="author">TAKAMITSU MATSUBARA<span><a href="https://isw3.naist.jp/" target="_blank">NAIST</a></span></div>
         <div class="date">Jan 15, 2025</div>
         <div class="links">
@@ -247,13 +253,13 @@
     <div class="content">
         <img src="assets/img/method-overview.png" alt="Method Overview" width="100%">
         <p>
-            Dynamic Movement Primitives (DMPs) provide a flexible framework for robotic motion generation, enabling the compact encoding of complex movements.
-            However, they lack the inherent capability to associate with multimodal data such as vision or linguistic instructions, and additionally do not possess inherent spatial awareness without external integration.
-            Vision-Language Models (VLMs), on the other hand, could effectively bridge multimodal data, such as linguistic instructions and vision, facilitating connections to lower-level control frameworks to improve task planning and execution.
-            However, they struggle with accurately generating low-level information needed by robots due to their absence in training data.
-            To address these challenges, we propose <strong>Keyword Labeled Primitive Selection and Keypoint Pairs Generation Guided Movement Primitives (KeyMPs)</strong>, a framework that leverages VLMs to infer DMP parameters by handling <em>learned parameters</em> and <em>spatial scaling parameters</em> separately.
-            This separation allows VLMs to utilize their high-level reasoning capabilities to manage <em>learned parameters</em> through selection based on assigned keywords, while also leveraging VLMs' spatial awareness to enhance generalization and reduce reliance on extensive human demonstrations by generating <em>spatial scaling parameters</em>.
-            We validate our approach through various experiments conducted on the object cutting task in both simulated and real-world environments, demonstrating superior performance over DMP-based comparison methods that also utilize VLM support in generating accurate and complex motions.
+            Dynamic Movement Primitives (DMPs) provide a flexible framework for encoding smooth robotic movements; however, they face challenges in integrating multimodal inputs commonly used in robotics like vision and language into their framework.
+            To fully maximize DMPs' potential, it's crucial to enable DMPs to respond to such multimodal inputs and to also broaden their capability to handle object-focused tasks requiring complex motion planning in one shot, as observation occlusion could easily happen mid-execution in such tasks (e.g. knife occlusion in ingredient cutting, piping bag occlusion in cake icing, hand occlusion in dough kneading, etc.).
+            A promising approach is to leverage Vision-Language Models (VLMs), which process multimodal data and grasp high-level concepts.
+            However, they typically lack the knowledge and capabilities to directly infer low-level motion details and instead serve as a bridge between high-level instructions and low-level control. 
+            To address this limitation, we propose Keyword Labeled Primitive Selection and Keypoint Pairs Generation Guided Movement Primitives (KeyMPs), a framework that combines VLMs with sequencing DMPs.
+            KeyMPs use VLMs' high-level reasoning to select a reference primitive through <i>Keyword Labeled Primitive Selection</i> and VLMs' spatial awareness to generate spatial scaling parameters used to generalize the overall motion through <i>Keypoint Pairs Generation</i>, ultimately enabling one-shot vision-language guided motion generation that aligns with the intent expressed in the multimodal input.
+            We validate our approach through an occlusion-rich manipulation task, specifically object cutting experiments in both simulated and real-world environments, demonstrating superior performance over other DMP-based methods that integrate VLMs support.
         </p>
 
         <h2>Method</h2>
@@ -262,7 +268,7 @@
         </p>
         <ol>
             <li>
-                <h3>Input acquisition:</h3>
+                <h3>Pre-Processing:</h3>
                 <p>
                     The framework begins by collecting two primary types of inputs:
                 </p>
@@ -293,7 +299,7 @@
                         <textarea id="textbox-1" class="text-box" readonly>
 You are a 𝑡𝑎𝑠𝑘 and a robot expert. 
 
-You will be provided with an image of an 𝑜𝑏𝑗𝑒𝑐𝑡 and a user input of 𝑑𝑒𝑠𝑖𝑟𝑒𝑑 𝑜𝑢𝑡𝑐𝑚𝑒. 
+You will be provided with an image of an 𝑜𝑏𝑗𝑒𝑐𝑡 and a user input of 𝑑𝑒𝑠𝑖𝑟𝑒𝑑 𝑜𝑢𝑡𝑐𝑜𝑚𝑒. 
 
 Your job is to select the most suitable 𝒑𝒓𝒊𝒎𝒊𝒕𝒊𝒗𝒆 from a list of 𝒑𝒓𝒊𝒎𝒊𝒕𝒊𝒗𝒆 𝒌𝒆𝒚𝒘𝒐𝒓𝒅𝒔 given the type of 𝒐𝒃𝒋𝒆𝒄𝒕 shown in the image and the user’s 𝒅𝒆𝒔𝒊𝒓𝒆𝒅 𝒐𝒖𝒕𝒄𝒐𝒎𝒆. 
 
@@ -335,66 +341,141 @@ To make sure proper keypoint pairs design generation, follow these steps:
             </li>
         </ol>
         <p>The rest of the details can be found in our <a href="#">research paper</a>.</p>
+
+        <h2 class="content">Implementation</h2>
+        <h3 class="content">System Prompt</h3>
+        <p>
+            In our object cutting experiment, we used the following system prompt to initialize the VLMs.
+        </p>
+        <div class="text-box-container">
+            <div class="copy-bar">
+                <button class="copy-button" data-clipboard-target="#textbox-3">Copy</button>
+            </div>
+            <textarea id="textbox-3" class="text-box" readonly>
+    You are a 𝑡𝑎𝑠𝑘 and a robot expert. 
+
+    You will be provided with an image of an 𝑜𝑏𝑗𝑒𝑐𝑡 and a user input of 𝑑𝑒𝑠𝑖𝑟𝑒𝑑 𝑜𝑢𝑡𝑐𝑜𝑚𝑒. 
+
+    Your job is to select the most suitable 𝒑𝒓𝒊𝒎𝒊𝒕𝒊𝒗𝒆 from a list of 𝒑𝒓𝒊𝒎𝒊𝒕𝒊𝒗𝒆 𝒌𝒆𝒚𝒘𝒐𝒓𝒅𝒔 given the type of 𝒐𝒃𝒋𝒆𝒄𝒕 shown in the image and the user’s 𝒅𝒆𝒔𝒊𝒓𝒆𝒅 𝒐𝒖𝒕𝒄𝒐𝒎𝒆. 
+
+    Here are the list of 𝑝𝑟𝑖𝑚𝑖𝑡𝑖𝑣𝑒 𝑘𝑒𝑦𝑤𝑜𝑟𝑑𝑠 for this 𝑡𝑎𝑠𝑘 : […] 
+
+    Provide me with the 𝑝𝑟𝑖𝑚𝑖𝑡𝑖𝑣𝑒 𝑘𝑒𝑦𝑤𝑜𝑟𝑑 you selected. Here are some examples: …
+            </textarea>
+        </div>
     </div>
+
+    
+    
+
 
     <h2 class="content">Videos</h2>
     <h3 class="content">Simulation Experiments</h3>
     <div class="video-grid">
         <div>
-            <video width="300" controls>
-                <source src="assets/vid/video1.mp4" type="video/mp4">
+            <video width="300" autoplay muted loop>
+                <source src="assets/vid/sim/3D_gt/proposed_0_0.webm" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-            <p>""</p>
+            <p>"A single horizontal slice in the middle"</p>
         </div>
         <div>
-            <video width="300" controls>
-                <source src="assets/vid/video2.mp4" type="video/mp4">
+            <video width="300" autoplay muted loop>
+                <source src="assets/vid/sim/3D_gt/proposed_1_0.webm" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-            <p>""</p>
+            <p>"I want to eat 1 slice for each day of this week, cut it vertically"</p>
         </div>
         <div>
-            <video width="300" controls>
-                <source src="assets/vid/video3.mp4" type="video/mp4">
+            <video width="300" autoplay muted loop>
+                <source src="assets/vid/sim/3D_gt/proposed_2_0.webm" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-            <p>""</p>
+            <p>"I'm having a party for 10 people, cut 1 slice for each"</p>
         </div>
         <div>
-            <video width="300" controls>
-                <source src="assets/vid/video4.mp4" type="video/mp4">
+            <video width="300" autoplay muted loop>
+                <source src="assets/vid/sim/3D_gt/proposed_3_0.webm" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-            <p>""</p>
+            <p>"Cut it into 8 equal slices"</p>
         </div>
         <div>
-            <video width="300" controls>
-                <source src="assets/vid/video1.mp4" type="video/mp4">
+            <video width="300" autoplay muted loop>
+                <source src="assets/vid/sim/3D_gt/proposed_4_0.webm" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-            <p>""</p>
+            <p>"The object is 10 cm long, cut it vertically into 5 cm slices"</p>
         </div>
         <div>
-            <video width="300" controls>
-                <source src="assets/vid/video2.mp4" type="video/mp4">
+            <video width="300" autoplay muted loop>
+                <source src="assets/vid/sim/3D_gt/proposed_5_0.webm" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-            <p>""</p>
+            <p>"The object is 15 cm long, cut it vertically into 5 cm slices"</p>
         </div>
         <div>
-            <video width="300" controls>
-                <source src="assets/vid/video3.mp4" type="video/mp4">
+            <video width="300" autoplay muted loop>
+                <source src="assets/vid/sim/3D_gt/proposed_6_0.webm" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-            <p>""</p>
+            <p>"The object is 20 cm long, cut it vertically into 5 cm slices"</p>
         </div>
         <div>
-            <video width="300" controls>
-                <source src="assets/vid/video4.mp4" type="video/mp4">
+            <video width="300" autoplay muted loop>
+                <source src="assets/vid/sim/3D_gt/proposed_7_0.webm" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-            <p>""</p>
+            <p>"The object is 25 cm long, cut it vertically into 5 cm slices"</p>
+        </div>
+        <div>
+            <video width="300" autoplay muted loop>
+                <source src="assets/vid/sim/3D_gt/proposed_8_0.webm" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p>"The object is 30 cm long, cut it vertically into 5 cm slices"</p>
+        </div>
+        <div>
+            <video width="300" autoplay muted loop>
+                <source src="assets/vid/sim/3D_gt/proposed_9_0.webm" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p>"Slice the object into 3 parts horizontally"</p>
+        </div>
+        <div>
+            <video width="300" autoplay muted loop>
+                <source src="assets/vid/sim/3D_gt/proposed_10_0.webm" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p>"Slice both tips of the object"</p>
+        </div>
+        <div>
+            <video width="300" autoplay muted loop>
+                <source src="assets/vid/sim/3D_gt/proposed_11_0.webm" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p>"The object is 35 cm long, cut it vertically into 5 cm slices"</p>
+        </div>
+        <div>
+            <video width="300" autoplay muted loop>
+                <source src="assets/vid/sim/3D_gt/proposed_12_0.webm" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p>"The object is 40 cm long, cut it vertically into 5 cm slices"</p>
+        </div>
+        <div>
+            <video width="300" autoplay muted loop>
+                <source src="assets/vid/sim/3D_gt/proposed_13_0.webm" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p>"The object is 40 cm long, cut it vertically into 5 cm slices"</p>
+        </div>
+        <div>
+            <video width="300" autoplay muted loop>
+                <source src="assets/vid/sim/3D_gt/proposed_14_0.webm" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p>"The object is 45 cm long, cut it vertically into 5 cm slices"</p>
         </div>
     </div>
 
