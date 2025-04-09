@@ -46,6 +46,22 @@
             textBoxesMerge.forEach((textBox) => {
                 textBox.style.height = `${maxHeightMerge}px`;
             });
+    
+            // Add smooth scrolling with offset for navigation links
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault(); // Prevent default anchor behavior
+                    const targetId = this.getAttribute('href').substring(1); // Remove the '#'
+                    const targetElement = document.getElementById(targetId);
+                    const offset = 60; // Adjust this value as needed (height of nav + buffer)
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
+    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                });
+            });
         });
     </script>
 
@@ -55,7 +71,7 @@
     body {
         line-height: 1.6;
         margin: 0;
-        padding: 0 0 50px 0;
+        padding: 50px 0 50px 0;
         background-color: #fff;
         font-family: Georgia, serif;
         width: 100%;
@@ -245,9 +261,47 @@
     .prompt-description {
         text-align: center;
     }
+    html {
+        scroll-behavior: smooth;
+    }
+    nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #ffffffdf;
+    padding: 10px 20px; /* Added right padding */
+    z-index: 1000;
+    box-sizing: border-box; /* Ensures padding is included in width */
+    }
+    nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: flex-end;
+        margin: 0 auto; /* Center the ul within the nav */
+        padding: 0;
+        max-width: 650px; /* Matches content max-width for alignment */
+    }
+    nav li {
+        margin-left: 20px;
+    }
+    nav a {
+        text-decoration: none;
+        color: #000;
+    }
+    nav a:hover {
+        text-decoration: underline;
+    }
 </style>
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="#abstract">Abstract</a></li>
+            <li><a href="#method">Method</a></li>
+            <li><a href="#implementation">Implementation</a></li>
+            <li><a href="#videos">Videos</a></li>
+        </ul>
+    </nav>
     <!-- <h1><span class="title-highlight"><strong>KeyMPs</strong></span><br><strong>Key</strong>word Labeled Primitive Selection and<br><strong>Key</strong>point Pairs Generation Guided<br><strong>Movement Primitives</strong><br>Using Vision-Language Models</h1> -->
     <h1><span class="title-highlight"><strong>KeyMPs</strong></span><br>One-Shot Vision-Language Guided Motion Generation by Sequencing DMPs for Occlusion-Rich Tasks</h1>
 
@@ -272,7 +326,7 @@
 
     <div class="content">
         <img src="assets/img/method-overview.png" alt="Method Overview" width="100%">
-        <p>
+        <p id="abstract">
             Dynamic Movement Primitives (DMPs) provide a flexible framework for encoding smooth robotic movements; however, they face challenges in integrating multimodal inputs commonly used in robotics like vision and language into their framework.
             To fully maximize DMPs' potential, it's crucial to enable DMPs to respond to such multimodal inputs and to also broaden their capability to handle object-focused tasks requiring complex motion planning in one shot, as observation occlusion could easily happen mid-execution in such tasks (e.g. knife occlusion in ingredient cutting, piping bag occlusion in cake icing, hand occlusion in dough kneading, etc.).
             A promising approach is to leverage Vision-Language Models (VLMs), which process multimodal data and grasp high-level concepts.
@@ -282,7 +336,7 @@
             We validate our approach through an occlusion-rich manipulation task, specifically object cutting experiments in both simulated and real-world environments, demonstrating superior performance over other DMP-based methods that integrate VLMs support.
         </p>
 
-        <h2>Method</h2>
+        <h2 id="method"><b>Method</b></h2>
         <p>
             Our proposed framework, <strong>KeyMPs</strong>, integrates language and vision inputs to generate executable motions by leveraging VLMs and DMPs. It operates through three stages:
         </p>
@@ -362,7 +416,7 @@ To make sure proper keypoint pairs design generation, follow these steps:
         </ol>
         <p>The rest of the details can be found in our <a href="#">research paper</a>.</p>
 
-        <h2 class="content">Implementation</h2>
+        <h2 class="content" id="implementation"><b>Implementation</b></h2>
         <h3 class="content">System Prompt</h3>
         <p>
             For this study, we employed GPT-4o, developed by OpenAI, as the foundational vision-language model (VLM). 
@@ -416,7 +470,7 @@ Final reminder, the keys inside the JSON are img_dim, object_description, descri
     
 
 
-    <h2 class="content">Videos</h2>
+    <h2 class="content" id="videos"><b>Videos</b></h2>
     <h3 class="content">Simulation Experiments</h3>
     <div class="video-grid">
         <div>
