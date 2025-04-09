@@ -11,37 +11,42 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            new ClipboardJS('.copy-button');
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            new ClipboardJS('.copy-button');
-
-            // Automatically resize textareas based on content
-            document.querySelectorAll('.text-box').forEach((textarea) => {
-                textarea.style.height = 'auto'; // Reset height to calculate scrollHeight
-                textarea.style.height = `${textarea.scrollHeight}px`; // Set height based on content
+            // Initialize ClipboardJS for all copy buttons
+            const clipboard = new ClipboardJS('.copy-button');
+    
+            // Optional: Add feedback for successful/failed copy actions
+            clipboard.on('success', (e) => {
+                console.log('Text copied successfully:', e.text);
+                e.clearSelection();
             });
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // Find all text boxes
+            clipboard.on('error', (e) => {
+                console.error('Copy failed:', e.action);
+            });
+    
+            // Standardize height for .text-box elements
             const textBoxes = document.querySelectorAll('.text-box');
-
-            // Calculate the maximum height
-            let maxHeight = 0;
+            let maxHeightTextBox = 0;
             textBoxes.forEach((textBox) => {
-                textBox.style.height = 'auto'; // Reset height to calculate scrollHeight
+                textBox.style.height = 'auto'; // Reset height
                 const contentHeight = textBox.scrollHeight;
-                maxHeight = Math.max(maxHeight, contentHeight);
+                maxHeightTextBox = Math.max(maxHeightTextBox, contentHeight);
             });
-
-            // Apply the maximum height to all text boxes
             textBoxes.forEach((textBox) => {
-                textBox.style.height = `${maxHeight}px`;
+                textBox.style.height = `${maxHeightTextBox}px`;
+            });
+    
+            // Standardize height for .text-box-merge elements
+            const textBoxesMerge = document.querySelectorAll('.text-box-merge');
+            let maxHeightMerge = 0;
+            textBoxesMerge.forEach((textBox) => {
+                textBox.style.height = 'auto'; // Reset height
+                const contentHeight = textBox.scrollHeight;
+                maxHeightMerge = Math.max(maxHeightMerge, contentHeight);
+            });
+            textBoxesMerge.forEach((textBox) => {
+                textBox.style.height = `${maxHeightMerge}px`;
             });
         });
-        
     </script>
 
 
@@ -210,6 +215,21 @@
         word-wrap: break-word;
         height: 150px;
     }
+    .text-box-merge {
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 0 0 5px 5px;
+        padding: 10px 10px 0 10px;
+        font-family: 'Crimson Pro', serif;
+        font-size: 14px;
+        background-color: #f9f9f9;
+        overflow-y: auto;
+        resize: none;
+        box-sizing: border-box;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        height: 150px;
+    }
     h2.content, h3.content {
         width: inherit; /* Inherit the dynamic width of the parent container */
         max-width: 55%; /* Match the max width of the video-grid */
@@ -233,13 +253,13 @@
 
     <div class="author-grid">
         <div class="author">EDGAR ANAROSSI<span><a href="https://isw3.naist.jp/" target="_blank">NAIST</a></span></div>
-        <div class="author">YUHWAN KWON<span><a href="https://isw3.naist.jp/" target="_blank">NAIST</a></span></div>
+        <div class="author">YUHWAN KWON<span><a href="https://isw3.naist.jp/" target="_blank">NAIST</a><br><a href="https://www.kansai-u.ac.jp/Fc_sci/english/department/ee/major.html" target="_blank">Kansai University</a></span></div>
         <div class="author">HIROTAKA TAHARA<span><a href="https://isw3.naist.jp/" target="_blank">NAIST</a><br><a href="https://www.kobe-kosen.ac.jp/groups/denshi/?page=1&cat=PC%E9%96%A2%E9%80%A3" target="_blank">Kobe Kosen</a></span></div>
-        <div class="author">SHOHEI TANAKA<span><a href="#" target="_blank">OMRON SINIC X Corporation</a></span></div>
-        <div class="author">KEISUKE SHIRAI<span><a href="#" target="_blank">OMRON SINIC X Corporation</a></span></div>
-        <div class="author">MASASHI HAMAYA<span><a href="#" target="_blank">OMRON SINIC X Corporation</a></span></div>
-        <div class="author">CHRISTIAN BELTRAN<span><a href="#" target="_blank">OMRON SINIC X Corporation</a></span></div>
-        <div class="author">ATSUSHI HASHIMOTO<span><a href="#" target="_blank">OMRON SINIC X Corporation</a></span></div>
+        <div class="author">SHOHEI TANAKA<span><a href="https://www.omron.com/sinicx/" target="_blank">OMRON SINIC X Corporation</a></span></div>
+        <div class="author">KEISUKE SHIRAI<span><a href="https://www.omron.com/sinicx/" target="_blank">OMRON SINIC X Corporation</a></span></div>
+        <div class="author">MASASHI HAMAYA<span><a href="https://www.omron.com/sinicx/" target="_blank">OMRON SINIC X Corporation</a></span></div>
+        <div class="author">CHRISTIAN BELTRAN<span><a href="https://www.omron.com/sinicx/" target="_blank">OMRON SINIC X Corporation</a></span></div>
+        <div class="author">ATSUSHI HASHIMOTO<span><a href="https://www.omron.com/sinicx/" target="_blank">OMRON SINIC X Corporation</a></span></div>
         <div class="author">TAKAMITSU MATSUBARA<span><a href="https://isw3.naist.jp/" target="_blank">NAIST</a></span></div>
         <div class="date">Jan 15, 2025</div>
         <div class="links">
@@ -345,22 +365,49 @@ To make sure proper keypoint pairs design generation, follow these steps:
         <h2 class="content">Implementation</h2>
         <h3 class="content">System Prompt</h3>
         <p>
-            In our object cutting experiment, we used the following system prompt to initialize the VLMs.
+            For this study, we employed GPT-4o, developed by OpenAI, as the foundational vision-language model (VLM). 
+            In our object cutting experiment, we utilized the following system prompt to initialize the VLMs.
         </p>
         <div class="text-box-container">
             <div class="copy-bar">
                 <button class="copy-button" data-clipboard-target="#textbox-3">Copy</button>
             </div>
-            <textarea id="textbox-3" class="text-box" readonly>
-    You are a 𝑡𝑎𝑠𝑘 and a robot expert. 
+            <textarea id="textbox-3" class="text-box-merge" readonly>
+You are a cooking and robotic expert who output values in JSON format.
+You will be given 2 inputs, user text input (let's call this in_text) and an image (in_img) of an object filling the image placed.
+Your task is to draw cutting lines on in_img using python to satisfy in_text.
 
-    You will be provided with an image of an 𝑜𝑏𝑗𝑒𝑐𝑡 and a user input of 𝑑𝑒𝑠𝑖𝑟𝑒𝑑 𝑜𝑢𝑡𝑐𝑜𝑚𝑒. 
+First, let's first describe the object in the image:
+(1) tell me the dimension of the image and put it in a key called 'img_dim'.
+(2) describe the properties of the object. things like the object's name, whether it is cooked or raw, object's hardness, object's elasticity, object's color, object's shape (square? circle? rectangular? object-specific shape?), object's orientation within the image (vertically longer? horizontally longer? diagonal?), object's average length (if not mentioned specifically), and other things you can describe from the image. put this description in a key called 'object_description'. Make sure you try to acquire the information from the image first before relying on your knowledge base. Try to fill in the remaining properties if you can't see it in the image.
+Interpret the object orientation through the image dimension, this will later be important on deciding the pattern's rotation.
 
-    Your job is to select the most suitable 𝒑𝒓𝒊𝒎𝒊𝒕𝒊𝒗𝒆 from a list of 𝒑𝒓𝒊𝒎𝒊𝒕𝒊𝒗𝒆 𝒌𝒆𝒚𝒘𝒐𝒓𝒅𝒔 given the type of 𝒐𝒃𝒋𝒆𝒄𝒕 shown in the image and the user’s 𝒅𝒆𝒔𝒊𝒓𝒆𝒅 𝒐𝒖𝒕𝒄𝒐𝒎𝒆. 
 
-    Here are the list of 𝑝𝑟𝑖𝑚𝑖𝑡𝑖𝑣𝑒 𝑘𝑒𝑦𝑤𝑜𝑟𝑑𝑠 for this 𝑡𝑎𝑠𝑘 : […] 
+Second, describe the object in the picture, then describe in detail how you would cut the object on the image into the desired result and put it in a key called 'description'. Create the design pattern using a combination of one or multiple keypoint pairs (lines).
+To make sure the plan is correct, 
+-in the first sentence describe the user desired outcome (e.g. equal cut, 5 slices, 8 slices, etc)
+-in the second sentence describe the type of design you want to use (grid-based or radial-based) (e.g. grid-based where you cut the objects into rows and columns no matter the cuts are combinations of horizontal+vertical cuts or horizontal+diagonal cuts, radial-based where you the cut is specifically cit like a pie). Only use radial cuts on circular shaped objects unless specifically asked.
+-in the third sentence describe your plan in detail based on the design type in the previous sentence on how you would cut the object while considering the properties of the object (described in 'object_description') and the user desired outcome.
+For example if I asked for 9 equal slices for an object, if the object shape is circular, then cut it using radial cuts on 360/9=40 degree cuts, meanwhile if the object shape is square/rectangular, then cut it using grids (e.g. 3 rows, 3 columns) for 9 equal cuts. 
+Notes:
+-Try utilizing your knowledge of the object parts ratio to create the cutting pattern if needed.
+-When handling cutting plan with some calculation, try to assert that the (number_of_cuts+1)*length_cut==total_length
+-You can use just horizontal cuts OR just vertical cuts OR just diagonal cuts OR grids of vertical and horizontal cuts OR other combinations of horizontal, vertical, & diagonal cuts, just make sure it achieves the user desired outcome correctly, you can try different ones for your plan.
 
-    Provide me with the 𝑝𝑟𝑖𝑚𝑖𝑡𝑖𝑣𝑒 𝑘𝑒𝑦𝑤𝑜𝑟𝑑 you selected. Here are some examples: …
+Third, Make me a python code based on 'description' which: 
+(1) imports the uploaded image as 'temp/test_img_proposed.png'; 
+(2) creates a cutting pattern according to 'description' within the range of 0 to 1;
+(3) scales said pattern from the previous step according to the image size; 
+(4) outputs a list of list of list of the scaled cutting pattern as a JSON file called 'temp/keypoints.json' with the key being 'keypoints'; 
+(5) draws the cutting pattern/lines (blue color) on top of the base image (let's call it 'temp/cropped_img.png') using matplotlib and saves it as 'temp/cut_projection.png'
+Notes:
+-Put all the python code inside a key called 'code' and make sure it's formatted properly so I can run it immediately.
+-Use consistent type of quotes for the code (single quote) and for the JSON file (double quote).
+-The inner-most list of 'keypoints' contains 2 values of x and y representing a coordinate on the image space where the x axis corresponds to the image columns and the y axis corresponds to the image rows. The list containing the inner-most list contains 2 lists representing a the start and end position of the line. Finally the outer-most list contains multiple of the list representing a line for each of the line in the cutting pattern. So the list's shape is something like this: [[[line1_start_x, line1_start, y], [line1_end_x, line1_end_y]], [[line2_start_x, line2_start, y], [line2_end_x, line2_end_y]], ..., [[lineN_start_x, lineN_start, y], [lineN_end_x, lineN_end_y]]]
+
+Fourth, I also want you to choose what style of cutting is best to cut the object in the image based on the properties you described in 'object_description'. You have 2 options to choose from: either 'downward' for straight-downward cutting for very soft object (e.g. soft cake, jelly, tofu, banana, easy to cut vegetables, etc) or 'sawing' for a sawing motion for harder, crusty, or elastic object (e.g. french bread, raw chicken or beef or pork or other meats, loaf of bread, etc). Explain your reasoning on how you choose a keyword and put it in 'keyword_reason', then put the selected keyword in 'keyword'.
+
+Final reminder, the keys inside the JSON are img_dim, object_description, description, code, keyword, keyword_reason.
             </textarea>
         </div>
     </div>
