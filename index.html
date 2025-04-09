@@ -52,14 +52,24 @@
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault(); // Prevent default anchor behavior
                     const targetId = this.getAttribute('href').substring(1); // Remove the '#'
-                    const targetElement = document.getElementById(targetId);
-                    const offset = 60; // Adjust this value as needed (height of nav + buffer)
-                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
     
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
+                    if (targetId === 'home') {
+                        // Scroll to the very top for Home link
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        // Scroll with offset for other links (including dropdown items)
+                        const targetElement = document.getElementById(targetId);
+                        const offset = targetId === 'videos' ? 60 : 60; // Same offset for all non-home links
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
+    
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
                 });
             });
         });
@@ -291,15 +301,55 @@
     nav a:hover {
         text-decoration: underline;
     }
+    .dropdown {
+        position: relative;
+    }
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1001; /* Ensure dropdown appears above other content */
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .dropdown-content li {
+        margin: 0; /* Override margin-left from nav li */
+    }
+    .dropdown-content a {
+        color: #000;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+    .dropdown-content a:hover {
+        background-color: #ddd;
+        text-decoration: underline;
+    }
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    .dropdown:hover .dropbtn {
+        background-color: #ddd; /* Optional: Highlight the Videos button on hover */
+    }
 </style>
 </head>
 <body>
     <nav>
         <ul>
+            <li><a href="#home">Home</a></li>
             <li><a href="#abstract">Abstract</a></li>
             <li><a href="#method">Method</a></li>
             <li><a href="#implementation">Implementation</a></li>
-            <li><a href="#videos">Videos</a></li>
+            <li class="dropdown">
+                <a href="#videos" class="dropbtn">Videos</a>
+                <ul class="dropdown-content">
+                    <li><a href="#simulation">Simulation</a></li>
+                    <li><a href="#real-robot">Real Robot</a></li>
+                </ul>
+            </li>
         </ul>
     </nav>
     <!-- <h1><span class="title-highlight"><strong>KeyMPs</strong></span><br><strong>Key</strong>word Labeled Primitive Selection and<br><strong>Key</strong>point Pairs Generation Guided<br><strong>Movement Primitives</strong><br>Using Vision-Language Models</h1> -->
@@ -471,7 +521,7 @@ Final reminder, the keys inside the JSON are img_dim, object_description, descri
 
 
     <h2 class="content" id="videos"><b>Videos</b></h2>
-    <h3 class="content">Simulation Experiments</h3>
+    <h3 class="content" id="simulation">Simulation Experiments</h3>
     <div class="video-grid">
         <div>
             <video width="300" autoplay muted loop>
@@ -580,7 +630,7 @@ Final reminder, the keys inside the JSON are img_dim, object_description, descri
         </div>
     </div>
 
-    <h3 class="content">Real Robot Experiments (4x speed)</h3>
+    <h3 class="content" id="real-robot">Real Robot Experiments (4x speed)</h3>
     <div class="video-grid">
         <div>
             <video width="300" autoplay muted loop>
