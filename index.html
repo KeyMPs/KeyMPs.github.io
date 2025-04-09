@@ -375,8 +375,11 @@
 
 
     <div class="content">
+        <br>
+        <br>
         <img src="assets/img/method-overview.png" alt="Method Overview" width="100%">
         <p id="abstract">
+            <br>
             Dynamic Movement Primitives (DMPs) provide a flexible framework for encoding smooth robotic movements; however, they face challenges in integrating multimodal inputs commonly used in robotics like vision and language into their framework.
             To fully maximize DMPs' potential, it's crucial to enable DMPs to respond to such multimodal inputs and to also broaden their capability to handle object-focused tasks requiring complex motion planning in one shot, as observation occlusion could easily happen mid-execution in such tasks (e.g. knife occlusion in ingredient cutting, piping bag occlusion in cake icing, hand occlusion in dough kneading, etc.).
             A promising approach is to leverage Vision-Language Models (VLMs), which process multimodal data and grasp high-level concepts.
@@ -386,6 +389,9 @@
             We validate our approach through an occlusion-rich manipulation task, specifically object cutting experiments in both simulated and real-world environments, demonstrating superior performance over other DMP-based methods that integrate VLMs support.
         </p>
 
+        <br>
+        <br>
+        <br>
         <h2 id="method"><b>Method</b></h2>
         <p>
             Our proposed framework, <strong>KeyMPs</strong>, integrates language and vision inputs to generate executable motions by leveraging VLMs and DMPs. It operates through three stages:
@@ -466,6 +472,9 @@ To make sure proper keypoint pairs design generation, follow these steps:
         </ol>
         <p>The rest of the details can be found in our <a href="#">research paper</a>.</p>
 
+        <br>
+        <br>
+        <br>
         <h2 class="content" id="implementation"><b>Implementation</b></h2>
         <h3 class="content">System Prompt</h3>
         <p>
@@ -520,6 +529,9 @@ Final reminder, the keys inside the JSON are img_dim, object_description, descri
     
 
 
+    <br>
+    <br>
+    <br>
     <h2 class="content" id="videos"><b>Videos</b></h2>
     <h3 class="content" id="simulation">Simulation Experiments</h3>
     <div class="video-grid">
@@ -629,7 +641,7 @@ Final reminder, the keys inside the JSON are img_dim, object_description, descri
             <p>"The object is 45 cm long, cut it vertically into 5 cm slices"</p>
         </div>
     </div>
-
+    <br>
     <h3 class="content" id="real-robot">Real Robot Experiments (4x speed)</h3>
     <div class="video-grid">
         <div>
