@@ -32,7 +32,7 @@ Our proposed framework, **KeyMPs**, integrates language and vision inputs to gen
 ---
 
 ### Additional Information
-The rest of the details can be found in our [research paper](#).
+The rest of the details can be found in our [research paper](https://arxiv.org/abs/2504.10011).
 
 ---
 
