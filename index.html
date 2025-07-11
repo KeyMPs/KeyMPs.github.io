@@ -405,7 +405,7 @@
         display: block;
         margin-left: auto;
         margin-right: auto;
-        box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
+        /* box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2); */
         border-radius: 8px;
         outline: 10px solid transparent;
         outline-offset: 10px;
@@ -624,7 +624,7 @@
                         <p class="prompt-description">In <strong>keyword labeled primitive selection</strong>, VLMs employ high-level reasoning to select a reference primitive from a predefined primitive dictionary.</p>
                         <figure>
                             <img src="assets/img/method-2-keyword.png" alt="Keyword Labeled Primitive Selection" width="62%">
-                            <figcaption>Overview of the KeyMPs framework for vision-language guided motion generation.</figcaption>
+                            <figcaption>Selection of DMP primitive using VLMs.</figcaption>
                         </figure>
                         <div class="copy-bar">
                             <button class="copy-button" data-clipboard-target="#textbox-1">Copy</button>
@@ -647,7 +647,7 @@ Provide me with the 𝑝𝑟𝑖𝑚𝑖𝑡𝑖𝑣𝑒 𝑘𝑒𝑦𝑤𝑜�
                         <p class="prompt-description">In <strong>keypoint pairs generation</strong>, VLMs generate 2D keypoint pairs that, combined with the object's height, define the <em>spatial scaling parameters</em> (\( y_0 \) and \( y_{\text{goal}} \)). These are based on combined language and vision inputs.</p>
                             <figure>
                                 <img src="assets/img/method-2-keypoint.png" alt="Keypoint Pairs Generation" width="62%">
-                                <figcaption>Overview of the KeyMPs framework for vision-language guided motion generation.</figcaption>
+                                <figcaption>Generation of keypoint pairs design using VLMs.</figcaption>
                             </figure>
                         <div class="copy-bar">
                                 <button class="copy-button" data-clipboard-target="#textbox-2">Copy</button>
@@ -681,7 +681,7 @@ To make sure proper keypoint pairs design generation, follow these steps:
                 </p>
                 <figure>
                     <img src="assets/img/method-3-sequencing.png" alt="DMP-based Motion Generation" width="60%" onclick="showLightbox()">
-                    <figcaption>Overview of the KeyMPs framework for vision-language guided motion generation.</figcaption>
+                    <figcaption>Sequencing of scaled DMP primitives to create the final complex motion.</figcaption>
                 </figure>
             </div>
         </div>
