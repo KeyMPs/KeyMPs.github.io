@@ -105,13 +105,14 @@
                     const captionHtml = caption ? `<figcaption>${caption}</figcaption>` : '';
                     const instance = basicLightbox.create(`
                         <div class="modal">
-                            <img src="${img.src}" alt="${img.alt}" style="max-width: 90vw; max-height: 90vh;">
+                            <img class="img-close" src="${img.src}" alt="${img.alt}" style="max-width: 90vw; max-height: 90vh;">
                             ${captionHtml}
                             <a class="lightbox-close" onclick="this.parentElement.parentElement.close()">×</a>
                         </div>
                     `, {
                         onShow: (instance) => {
-                            instance.element().querySelector('.lightbox-close').onclick = instance.close;
+                            // instance.element().querySelector('.lightbox-close').onclick = instance.close;
+                            instance.element().querySelector('.modal').onclick = instance.close;
                         }
                     });
                     instance.show();
@@ -434,7 +435,7 @@
     .modal figcaption {
         color: #fff;
         font-family: 'Crimson Pro', serif;
-        font-size: 18px;
+        font-size: 24px;
         margin-top: 8px;
         max-width: 90vw;
         margin-left: auto;
