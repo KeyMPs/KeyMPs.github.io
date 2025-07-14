@@ -111,8 +111,8 @@
                         </div>
                     `, {
                         onShow: (instance) => {
-                            // instance.element().querySelector('.lightbox-close').onclick = instance.close;
-                            instance.element().querySelector('.modal').onclick = instance.close;
+                            instance.element().querySelector('.lightbox-close').onclick = instance.close;
+                            // instance.element().querySelector('.modal').onclick = instance.close;
                         }
                     });
                     instance.show();
@@ -370,6 +370,7 @@
         border-radius: 8px 8px 0px 0px ;
         box-shadow: 0 0 8px rgba(0, 0, 0, 0.2); /* Drop shadow for active button */
         z-index: 2;
+        transition: background-color 0.3s ease; 
     }
     .tab-button:not(.active):hover {
         background-color: #ccc;
@@ -383,11 +384,13 @@
         border-radius: 0px 0px 8px 8px;
         position: relative; /* For z-index layering */
         z-index: 1;
+        transition: background-color 0.3s ease; 
     }
     .tab-content.active {
         display: block;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Drop shadow for active content */
         z-index: 2;
+        transition: background-color 0.3s ease; 
     }
     .experiments-section {
         max-width: 1400px;
@@ -529,6 +532,7 @@
         border-radius: 8px 8px 0px 0px ;
         box-shadow: 0 0 8px rgba(0, 0, 0, 0.2); /* Drop shadow for active button */
         z-index: 2;
+        transition: background-color 0.3s ease; 
     }
     .submethod-tab-content {
         display: none;
@@ -538,11 +542,13 @@
         border-radius: 0px 0px 8px 8px;
         position: relative; /* For z-index layering */
         z-index: 1;
+        transition: background-color 0.3s ease; 
     }
     .submethod-tab-content.active {
         display: block;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Drop shadow for active content */
         z-index: 2;
+        transition: background-color 0.3s ease; 
     }
     /* #abstract{
         border: 1px solid #ccc;
