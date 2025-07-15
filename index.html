@@ -109,7 +109,7 @@
 
             // Function to initialize lightbox for newly loaded content
             function initializeLightbox() {
-                 document.querySelectorAll('img').forEach(img => {
+                 document.querySelectorAll('img:not(.logo)').forEach(img => {
                     // Avoid adding multiple listeners to the same image
                     if (!img.dataset.lightboxInitialized) {
                         img.addEventListener('click', () => {
@@ -242,7 +242,9 @@
             <table class="title-table">
                 <tr>
                     <td class="title-icon-cell">
-                        <img src="assets/img/rllab.png" alt="RLLab icon" width="100" height="100">
+                        <a href="https://sites.google.com/view/naist-robot-learning-jp/%E3%83%9B%E3%83%BC%E3%83%A0" target="_blank">
+                            <img class="logo" src="assets/img/rllab.png" alt="RLLab icon" width="100" height="100">
+                        </a>
                     </td>
                     <td class="title-text-cell">
                         <h1><span class="title-highlight"><strong>KeyMPs</strong></span><br>One-Shot Vision-Language Guided Motion Generation by Sequencing DMPs for Occlusion-Rich Tasks</h1>
