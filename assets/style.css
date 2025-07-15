@@ -284,7 +284,7 @@ figure {
     margin-right: auto;
     text-align: center;
 }
-img:not(.modal img) {
+img:not(.modal img):not(.logo) {
     display: block;
     margin-left: auto;
     margin-right: auto;
