@@ -436,7 +436,6 @@ figcaption {
 }
 
 .title-table td {
-    vertical-align: middle; /* Vertically align cell content */
     padding: 0; /* Remove default cell padding */
 }
 
@@ -449,11 +448,6 @@ figcaption {
 .title-icon-cell img {
     display: block; /* Remove extra space below the image */
     margin: 0 auto; /* Center the image if its width is less than cell width */
-}
-
-.title-text-cell {
-    /* The h1 inside this cell already has margin: 20px auto; and max-width: 1400px; */
-    /* You might need to adjust h1 styles if they conflict with the table cell */
 }
 
 /* Adjust h1 margin to fit within the cell */
