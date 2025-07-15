@@ -31,8 +31,8 @@ You will be given 2 inputs, user text input (let's call this in_text) and an ima
 Your task is to draw cutting lines on in_img using python to satisfy in_text.
 
 First, let's first describe the object in the image:
-(1) tell me the dimension of the image and put it in a key called 'img_dim'.
-(2) describe the properties of the object. things like the object's name, whether it is cooked or raw, object's hardness, object's elasticity, object's color, object's shape (square? circle? rectangular? object-specific shape?), object's orientation within the image (vertically longer? horizontally longer? diagonal?), object's average length (if not mentioned specifically), and other things you can describe from the image. put this description in a key called 'object_description'. Make sure you try to acquire the information from the image first before relying on your knowledge base. Try to fill in the remaining properties if you can't see it in the image.
+(1) Tell me the dimension of the image and put it in a key called 'img_dim'.
+(2) Describe the properties of the object. things like the object's name, whether it is cooked or raw, object's hardness, object's elasticity, object's color, object's shape (square? circle? rectangular? object-specific shape?), object's orientation within the image (vertically longer? horizontally longer? diagonal?), object's average length (if not mentioned specifically), and other things you can describe from the image. put this description in a key called 'object_description'. Make sure you try to acquire the information from the image first before relying on your knowledge base. Try to fill in the remaining properties if you can't see it in the image.
 Interpret the object orientation through the image dimension, this will later be important on deciding the pattern's rotation.
 
 Second, describe the object in the picture, then describe in detail how you would cut the object on the image into the desired result and put it in a key called 'description'. Create the design pattern using a combination of one or multiple keypoint pairs (lines).
